@@ -14,11 +14,26 @@
   </head>
 
   <body>
-    <h3>Original Deck</h3>
-    <section id="original-deck-container" class="card-container"></section>
-    <button>RE-SHUFFLE DECK</button>
-    <h3>Shuffled Deck</h3>
-    <div></div>
-    <section id="shuffled-deck-container" class="card-container"></section>
+    <header>
+      <h1>Welcome to BlackJack</h1>
+    </header>
+    <main>
+      <div class="balance-container">
+        <div class="balance-title">Balance: $</div>
+        <div class="balance" id="balance-value"></div>
+      </div>
+      <div class="results-container">
+        <div id="results" class="prompt-on-first-render">
+          Select bet amount for hand then press deal
+        </div>
+      </div>
+      <div class="select-bet-container">
+        <div class="select-bet-title">Bet Amount</div>
+        <div id="bet-options"></div>
+      </div>
+      <div class="deal-button-container">
+        <div class="deal-button" id="deal-button">Deal</div>
+      </div>
+    </main>
   </body>
 </html>
