@@ -28,13 +28,16 @@ let dealer = {
 };
 
 let player = {
+  availableBalance: 0,
   balance: 100,
   cards: [],
-  win: false,
   currentBet: 0,
   totalBet: 0,
   total: [],
   numsTotal: 0,
+  lost: false,
+  won: false,
+  bust: false,
 };
 
 let betOptions = [1, 10, 25, 100, 500];
@@ -63,6 +66,8 @@ let betPromptEl = document.getElementById("show-between-hands");
 
 let betForHandEl = document.getElementById("bet-for-hand");
 
+let backOfCardImgEl = document.getElementById("back-of-card");
+
 let dealerCardsEl = document.getElementById("dealer-cards");
 
 let playerCardsEl = document.getElementById("player-cards");
@@ -79,14 +84,52 @@ let standButtonEl = document
   .getElementById("stand-button")
   .addEventListener("click", handleStand);
 
+let showAfterHandEl = document.getElementById("show-after-hand");
+
+let resultsEl = document.getElementById("results");
+
 /*----- event listeners -----*/
 
 function handleHit() {
-  console.log(player, dealer);
+  player.cards.push(getRandomCard());
+  createCard(player.cards, playerCardsEl, player.total);
+  player.numsTotal = player.numsTotal + player.total[player.total.length - 1];
+  playerTotalEl.innerText = `(${player.numsTotal})`;
+  if (player.numsTotal > 21) {
+    playerTotalEl.innerText = "Bust! " + player.numsTotal;
+    handlePlayerBust();
+  }
 }
 
 function handleStand() {
-  console.log(player, dealer);
+  backOfCardImgEl.style.display = "none";
+  if (dealer.numsTotal < 17) {
+    dealer.cards.push(getRandomCard());
+    createCard(dealer.cards, dealerCardsEl, dealer.total);
+    dealer.numsTotal = dealer.numsTotal + dealer.total[dealer.total.length - 1];
+    dealerTotalEl.innerText = `(${dealer.numsTotal})`;
+    if (dealer.numsTotal > 21) {
+      handlePlayerWon();
+    } else if (dealer.numsTotal < 17) {
+      setTimeout(handleStand, 1000);
+    } else if (player.numsTotal === dealer.numsTotal) {
+      handlePush();
+    } else if (player.numsTotal > dealer.numsTotal) {
+      handlePlayerWon();
+    } else {
+      handlePlayerLost();
+    }
+  } else {
+    if (dealer.numsTotal > 21) {
+      handlePlayerWon();
+    } else if (player.numsTotal === dealer.numsTotal) {
+      handlePush();
+    } else if (player.numsTotal > dealer.numsTotal) {
+      handlePlayerWon();
+    } else {
+      handlePlayerLost();
+    }
+  }
 }
 
 function handleDeal() {
@@ -94,7 +137,8 @@ function handleDeal() {
     betTextEl.innerText = "Please select bet";
   } else {
     getNewShuffledDeck();
-    balanceEl.innerText = player.balance - player.totalBet;
+    player.availableBalance = player.balance - player.totalBet;
+    balanceEl.innerText = player.availableBalance;
     dealEl.style.display = "flex";
     betEl.style.display = "none";
     betForHandEl.innerText = player.totalBet;
@@ -102,6 +146,9 @@ function handleDeal() {
     createCardTotal(player.total, player, playerTotalEl);
     createCardTotal(dealer.total, dealer, dealerTotalEl);
     setCardTotal();
+    if (player.numsTotal === 21) {
+      setTimeout(handleBlackjack, 1000);
+    }
   }
 }
 
@@ -121,6 +168,77 @@ function handleBet(event) {
 }
 
 /*----- functions -----*/
+
+function handleBlackjack() {
+  showAfterHandEl.style.display = "flex";
+  player.balance = player.totalBet * 3 + player.availableBalance;
+  player.totalBet = 0;
+  resultsEl.innerHTML = `Blackjack! You won ${
+    player.balance - availableBalance
+  }`;
+
+  setTimeout(backToStart, 4000);
+}
+
+function backToStart() {
+  showAfterHandEl.style.display = "none";
+  dealEl.style.display = "none";
+  betEl.style.display = "flex";
+  balanceEl.innerText = player.balance;
+  betTextEl.innerText = "Select Bet";
+  dealer.cards = [];
+  dealer.total = [];
+  dealer.numsTotal = 0;
+  player.total = [];
+  player.numsTotal = 0;
+  player.lost = false;
+  player.won = false;
+  player.cards = [];
+  player.totalBet = 0;
+  backOfCardImgEl.style.display = "flex";
+}
+
+function handleEndOfHand() {
+  showAfterHandEl.style.display = "flex";
+  if (player.lost === true) {
+    resultsEl.innerHTML = `Dealer won! Player: ${player.numsTotal}  Dealer: ${dealer.numsTotal}`;
+    setTimeout(backToStart, 4000);
+  } else if (player.won === true) {
+    resultsEl.innerHTML = `You won! Player: ${player.numsTotal} Dealer: ${dealer.numsTotal}`;
+    setTimeout(backToStart, 4000);
+  } else if (player.bust === true) {
+    resultsEl.innerHTML = `You Busted!`;
+    setTimeout(backToStart, 4000);
+  } else {
+    resultsEl.innerHTML = `Push, you both had ${player.numsTotal}`;
+    setTimeout(backToStart, 4000);
+  }
+}
+
+function handlePush() {
+  setTimeout(handleEndOfHand, 2000);
+  player.balance = player.totalBet + player.availableBalance;
+}
+
+function handlePlayerWon() {
+  setTimeout(handleEndOfHand, 2000);
+  player.balance = player.totalBet * 2 + player.availableBalance;
+  player.totalBet = 0;
+  player.won = true;
+}
+function handlePlayerBust() {
+  setTimeout(handleEndOfHand, 2000);
+  player.totalBet = 0;
+  player.balance = player.availableBalance;
+  player.bust = true;
+}
+
+function handlePlayerLost() {
+  setTimeout(handleEndOfHand, 2000);
+  player.totalBet = 0;
+  player.balance = player.availableBalance;
+  player.lost = true;
+}
 
 function setCardTotal() {
   dealerTotalEl.innerText = `(${dealer.numsTotal})`;

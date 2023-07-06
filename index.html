@@ -24,6 +24,9 @@
       </div>
       <div id="conditional-page-render" class="page-render">
         <div id="show-during-hand" class="during-game-container">
+          <div id="show-after-hand" class="show-after-hand-container">
+            <div id="results"></div>
+          </div>
           <div class="bet-for-hand-container">
             <div class="bet-for-hand-title">Bet Amount:</div>
             <div id="bet-for-hand" class="bet-for-hand-amount"></div>
@@ -32,7 +35,10 @@
             Dealers Cards:
             <div class="image-container">
               <div id="dealer-cards" class="dealer-cards"></div>
-              <img src="css/card-library/images/backs/backOfCard.png" />
+              <img
+                id="back-of-card"
+                src="css/card-library/images/backs/backOfCard.png"
+              />
             </div>
             <div id="dealer-total"></div>
           </div>
@@ -57,7 +63,7 @@
           <div class="select-bet-container">
             <div id="bet-title" class="select-bet-title">Select Bet</div>
             <div id="bet-options" class="bet-options-container"></div>
-            <div id="bet-error"></div>
+            <div class="bet-error" id="bet-error"></div>
           </div>
 
           <div class="deal-button-container">
