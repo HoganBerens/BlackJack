@@ -15,24 +15,55 @@
 
   <body>
     <header>
-      <h1>Welcome to BlackJack</h1>
+      <h1>Welcome to Blackjack</h1>
     </header>
     <main>
       <div class="balance-container">
-        <div class="balance-title">Balance: $</div>
+        <div class="balance-title">Balance:</div>
         <div class="balance" id="balance-value"></div>
       </div>
-      <div class="results-container">
-        <div id="results" class="prompt-on-first-render">
-          Select bet amount for hand then press deal
+      <div id="conditional-page-render" class="page-render">
+        <div id="show-during-hand" class="during-game-container">
+          <div class="bet-for-hand-container">
+            <div class="bet-for-hand-title">Bet Amount:</div>
+            <div id="bet-for-hand" class="bet-for-hand-amount"></div>
+          </div>
+          <div class="dealer-cards-container">
+            Dealers Cards:
+            <div class="image-container">
+              <div id="dealer-cards" class="dealer-cards"></div>
+              <img src="css/card-library/images/backs/backOfCard.png" />
+            </div>
+            <div id="dealer-total"></div>
+          </div>
+          <div class="player-cards-container">
+            Players Cards:
+
+            <div id="player-cards" class="player-cards"></div>
+
+            <div id="player-total"></div>
+          </div>
+          <div class="hit-stand-button-container">
+            <div class="hit-button" id="hit-button">Hit</div>
+            <div class="stand-button" id="stand-button">Stand</div>
+          </div>
         </div>
-      </div>
-      <div class="select-bet-container">
-        <div class="select-bet-title">Bet Amount</div>
-        <div id="bet-options"></div>
-      </div>
-      <div class="deal-button-container">
-        <div class="deal-button" id="deal-button">Deal</div>
+        <div id="show-between-hands" class="bet-prompt-container">
+          <div class="results-container">
+            <div id="results" class="prompt-on-first-render">
+              Select bet amount then press deal
+            </div>
+          </div>
+          <div class="select-bet-container">
+            <div id="bet-title" class="select-bet-title">Select Bet</div>
+            <div id="bet-options" class="bet-options-container"></div>
+            <div id="bet-error"></div>
+          </div>
+
+          <div class="deal-button-container">
+            <div class="deal-button" id="deal-button">Deal Hand</div>
+          </div>
+        </div>
       </div>
     </main>
   </body>
