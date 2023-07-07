@@ -185,6 +185,7 @@ function backToStart() {
   player.won = false;
   player.cards = [];
   player.totalBet = 0;
+  player.bust = false;
   backOfCardImgEl.style.display = "flex";
 }
 
