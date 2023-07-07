@@ -1,4 +1,3 @@
-/*----- constants -----*/
 const suits = ["s", "c", "d", "h"];
 const ranks = [
   "02",
@@ -18,7 +17,6 @@ const ranks = [
 
 const originalDeck = buildOriginalDeck();
 
-/*----- app's state (variables) -----*/
 let shuffledDeck = [];
 
 let dealer = {
@@ -42,7 +40,6 @@ let player = {
 
 let betOptions = [1, 10, 25, 100, 500];
 
-/*----- cached element references -----*/
 let renderEl = document.getElementById("conditional-page-render");
 
 let dealEl = document.getElementById("show-during-hand");
@@ -87,8 +84,6 @@ let standButtonEl = document
 let showAfterHandEl = document.getElementById("show-after-hand");
 
 let resultsEl = document.getElementById("results");
-
-/*----- event listeners -----*/
 
 function handleHit() {
   player.cards.push(getRandomCard());
@@ -167,16 +162,11 @@ function handleBet(event) {
   }
 }
 
-/*----- functions -----*/
-
 function handleBlackjack() {
   showAfterHandEl.style.display = "flex";
   player.balance = player.totalBet * 3 + player.availableBalance;
   player.totalBet = 0;
-  resultsEl.innerHTML = `Blackjack! You won ${
-    player.balance - availableBalance
-  }`;
-
+  resultsEl.innerHTML = `Blackjack!`;
   setTimeout(backToStart, 4000);
 }
 

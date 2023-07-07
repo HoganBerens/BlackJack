@@ -94,15 +94,23 @@ img {
 
 .show-after-hand-container {
   position: absolute;
-  background-color: rgb(255, 253, 205);
+  background-color: rgb(216, 255, 244);
   height: 350px;
   width: 350px;
   top: 200px;
-  left: 180px;
+  left: 200px;
   display: none;
   justify-content: center;
   align-items: center;
   font-size: 30px;
+}
+
+.results {
+  display: flex;
+  height: 100%;
+
+  align-items: center;
+  justify-content: center;
 }
 
 .bet-options-container {
@@ -113,6 +121,7 @@ img {
   flex: 1 1 auto;
   font-size: 24px;
   margin-left: 10px;
+  cursor: pointer;
 }
 
 .bet-option:hover {
@@ -133,6 +142,7 @@ img {
   font-size: 30px;
   height: 80px;
   width: 200px;
+  cursor: pointer;
 }
 
 .deal-button:hover {
@@ -150,12 +160,14 @@ img {
   margin-left: 70px;
   margin-right: 50px;
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .stand-button {
   font-size: 50px;
   margin-right: 50px;
   text-decoration: underline;
+  cursor: pointer;
 }
 .hit-button:hover {
   background-color: darkGrey;
