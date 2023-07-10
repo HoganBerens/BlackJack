@@ -157,7 +157,6 @@ function handleBet(event) {
     player.currentBet = text;
     player.totalBet = player.totalBet + player.currentBet;
     player.currentBet = 0;
-
     betTextEl.innerText = `Total Bet: ${player.totalBet}`;
   }
 }
